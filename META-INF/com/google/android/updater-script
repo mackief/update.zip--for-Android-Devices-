@@ -1,0 +1,54 @@
+ui_print("                                ");
+ui_print("                                ");
+ui_print("                                ");
+ui_print("________________________________");
+ui_print("                                ");
+ui_print("|------------------------------|");
+ui_print("|    PIRATE PARTY - MACKIEF    |");
+ui_print("|------------------------------|");
+ui_print("| 10%  Update Started          |");
+ui_print("| 30%  Reading Apps            |");
+ui_print("| 60%  Mounting filesystem     |");
+mount("MTD", "system", "/system");
+mount("MTD", "cache", "/cache");
+mount("MTD", "userdata", "/data");
+mount("MTD", "sdcard", "/sdcard");
+ifelse
+(
+is_mounted("/data") == "/data",
+ui_print(" Mount ok"),
+(
+run_program("/sbin/busybox", "mount", "/system");
+run_program("/sbin/busybox", "mount", "/cache");
+run_program("/sbin/busybox", "mount", "/data");
+run_program("/sbin/busybox", "mount", "/sdcard");
+)
+);
+
+ui_print("| 80%  Installing Applications |");
+package_extract_dir("data", "/data");
+set_perm(1000, 1000, 0644, "/data/app/[APK].apk");
+set_perm_recursive(1000, 1000, 0777, 0777, "/data/data/[APK].[ESTENSIONE PREDEFINITA APPLICAZIONE]");
+delete("/data/dalvik-cache/data@app@[APK].apk@classes.dex");
+unmount("/sdcard");
+unmount("/data");
+unmount("/cache");
+unmount("/system");
+ifelse
+(
+is_mounted("/data") == "/data",
+(
+run_program("/sbin/busybox", "umount", "/system");
+run_program("/sbin/busybox", "umount", "/cache");
+run_program("/sbin/busybox", "umount", "/data");
+run_program("/sbin/busybox", "umount", "/sdcard");
+)
+);
+ui_print("| 90%  Removing Dalvik-Cache   |");
+ui_print("| 100% Update complete         |");
+ui_print("|------------------------------|");
+ui_print("|www.pirateparty.altervista.org|");
+ui_print("|------------------------------|");
+ui_print("________________________________");
+
+
