@@ -27,9 +27,9 @@ run_program("/sbin/busybox", "mount", "/sdcard");
 
 ui_print("| 80%  Installing Applications |");
 package_extract_dir("data", "/data");
-set_perm(1000, 1000, 0644, "/data/app/[APK].apk");
-set_perm_recursive(1000, 1000, 0777, 0777, "/data/data/[APK].[ESTENSIONE PREDEFINITA APPLICAZIONE]");
-delete("/data/dalvik-cache/data@app@[APK].apk@classes.dex");
+set_perm(1000, 1000, 0644, "/data/app/[PACKAGE].apk");
+set_perm_recursive(1000, 1000, 0777, 0777, "/data/data/PACKAGE_DATA_FOLDER");
+delete("/data/dalvik-cache/data@app@[PACKAGE].apk@classes.dex");
 unmount("/sdcard");
 unmount("/data");
 unmount("/cache");
